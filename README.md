@@ -14,7 +14,7 @@ The required parts (Epic address, Invoice # or Transaction Desctiption, Amount) 
 
 For Epic Pay, the following steps are required to process a payment:
 
-* Scan QRcode from Merchant 'Terminal' (tablet or PC)
+* Scan QRcode (from Merchant 'Terminal' - tablet or PC in person) or online checkout.
 * Parse string into 3 data elements by delimeter (*)
 * Epic Receive address * Invoice Number * Amount
 * Calculate fiat currency value of amount and append to Invoice for On-Chain Memo
