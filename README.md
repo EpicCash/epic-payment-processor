@@ -3,11 +3,11 @@
 
 A typical Point of Sale System is an inventory control program with the ability to generate a sales invoice, customized for each merchant's specific situation. It does not function as a Payment Processor to 'settle' or pay the generated Invoice.
 
-Settling the Invoice is the job of a separate Payment Processing System. This could be as simple as a cash drawer attached to a computer or an integrated cash register that settles the transaction with cash. For 99% of most transactions, they are settled using a bank's Merchant Terminal to process a CC and settle the invoice with Credit (haha, reverse logic there, it's personal debt). Small businesses can tell the banks to go screw and use something like Square (I do) with no monthly fees and fixed rate that is taken out of the transaction before it hits your account. Still uses card swipe or chip reader.
+Settling the Invoice is the job of a separate Payment Processing System. This could be as simple as a cash drawer attached to a computer or an integrated cash register that settles the transaction with cash. For 99% of most transactions, they are settled using a bank's Merchant Terminal to process a CC and settle the invoice with Credit.
 
-Payment Processing is separate from Point of Sale, but they can have hooks into each other (POS sends PPS the invoice and amt, PPS sends POS confirmation of payment to settle Invoice). My Epic PPS allows the merchant to manually generate the parts required for Epic wallet to settle the transaction with Epic and would also require a manual query of the wallet to verify the amount was received and then mark the Invoice in the POS as 'settled/paid'.
+Payment Processing is separate from Point of Sale, but they can have hooks into each other (POS sends PPS the invoice and amt, PPS sends POS confirmation of payment to settle Invoice). The Epic PPS allows the merchant to manually generate the parts required for Epic wallet to settle the transaction with Epic and would also require a manual query of the wallet to verify the amount was received and then mark the Invoice in the POS as 'settled/paid'.
 
-The required parts (Epic address, Invoice #, Amount) can be generated from a merchant's POS system with minor coding and present the info as a QRcode for the Epic Pay Wallet to scan and process (like my epipay.epic.tech but fully automated). More POS code would be needed to query the Epic wallet to confirm the transaction amount was received in order to settle the Invoice and mark as paid.
+The required parts (Epic address, Invoice # or Transaction Desctiption, Amount) can be generated from a merchant's POS system with minor coding and present the info as a QRcode for the Epic Pay Wallet to scan and process (like my epipay.epic.tech but fully automated). More POS code would be needed to query the Epic wallet to confirm the transaction amount was received in order to settle the Invoice and mark as paid.
 
 
 ## Epic Pay Mobile Wallet 'Pay' Button
