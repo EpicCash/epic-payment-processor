@@ -20,6 +20,7 @@ For Epic Pay, the following steps are required to process a payment:
 * Calculate fiat currency value of amount and append to Invoice for On-Chain Memo
 * Jump to Send page
 * Autofill the Send Address, On-Chain Memo, Amount
+* User verifies info on Send page then taps Send to make Payment
 
 ## Using epipay at epic.tech for Payment QRcodes
 
