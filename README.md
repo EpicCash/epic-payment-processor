@@ -1,5 +1,5 @@
 # Epic Payment Processor
-Methodology for Using Epic Cash to Settle Merchant Invoicing
+## Methodology for Using Epic Cash to Settle Merchant Invoicing
 
 A typical Point of Sale Systemis an inventory control system with the ability to generate a sales invoice, customized for each merchant's specific situation. It does not function as a Payment Processor.
 
@@ -14,9 +14,10 @@ The required parts (Epic address, Invoice #, Amount) can be generated from a mer
 
 For Epic Pay, the following steps are required to process a payment:
 
+* Scan QRcode from Merchant 'Terminal' (tablet or PC)
 * Parse string into 3 data elements by delimeter (*)
 * Epic Receive address * Invoice Number * Amount
-* Calculate fiat currency value of amount and append to Invoice/Memo
+* Calculate fiat currency value of amount and append to Invoice for On-Chain Memo
 * Jump to Send page
 * Autofill the Send Address, On-Chain Memo, Amount
 
