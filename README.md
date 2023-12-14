@@ -1,7 +1,7 @@
 # Epic Payment Processor
 Methodology for Using Epic Cash to Settle Merchant Invoicing
 
-If you mention in the interview my Payment Processing Solution, we should clarify the difference between POS and PPS. Too many people want Epic to have a 'Point of Sale' system that don't understand what POS is. POS is an inventory control system with the ability to generate a sales invoice, customized for each merchant's specific situation. It does not function as a Payment Processor.
+A typical Point of Sale Systemis an inventory control system with the ability to generate a sales invoice, customized for each merchant's specific situation. It does not function as a Payment Processor.
 
 Settling the Invoice is the job of a separate Payment Processing System. This could be as simple as a cash drawer attached to a computer or an integrated cash register that settles the transaction with cash. For 99% of most transactions, they are settled using a bank's Merchant Terminal to process a CC and settle the invoice with Credit (haha, reverse logic there, it's personal debt). Small businesses can tell the banks to go screw and use something like Square (I do) with no monthly fees and fixed rate that is taken out of the transaction before it hits your account. Still uses card swipe or chip reader.
 
@@ -9,13 +9,16 @@ Payment Processing is separate from Point of Sale, but they can have hooks into 
 
 The required parts (Epic address, Invoice #, Amount) can be generated from a merchant's POS system with minor coding and present the info as a QRcode for the Epic Pay Wallet to scan and process (like my epipay.epic.tech but fully automated). More POS code would be needed to query the Epic wallet to confirm the transaction amount was received in order to settle the Invoice and mark as paid.
 
-For Epic Pay, the 'Pay' button feature should be fairly quick and easy since it already has the component parts working:
-Scan QRcode
-Parse string into 3 data elements by delimeter (*)
-EPIC address * Invoice Number * Amount
-Calculate fiat value of amount and append to Invoice/Memo
-Jump to Send page
-Autofill the Send Address, On-Chain Memo, Amount
+
+## Epic Pay Mobile Wallet 'Pay' Button
+
+For Epic Pay, the following steps are required to process a payment:
+
+* Parse string into 3 data elements by delimeter (*)
+* Epic Receive address * Invoice Number * Amount
+* Calculate fiat currency value of amount and append to Invoice/Memo
+* Jump to Send page
+* Autofill the Send Address, On-Chain Memo, Amount
 
 ## Using epipay at epic.tech for Payment QRcodes
 
