@@ -34,4 +34,6 @@ https://epipay.epic.tech?receive_address*inv/memo*amount - this will populate al
 
 Note: The amount field should bring up the Numeric Keypad on mobiles.
 
+## Using GUI for Payment Processing via Merchant Payment Request
 
+Merchant would provide not only a QRcode for EP but also the same data string as a 'Payment Request' on their Checkout screen that can be copied from the website and pasted into a Pay screen on GUI that follows the same processing steps as EP with an additional first step to paste the Payment Request string into an input field. GUI could then stay on Pay screen to review parsed data and verify amount then Send or a Pay Button would then jump to the Send screen with data autofilled. Details of the process for GUI to be determined as development progresses.
