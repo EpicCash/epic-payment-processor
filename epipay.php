@@ -47,9 +47,10 @@ textarea
 <?php
 if (isset($_SERVER["QUERY_STRING"])) {
   $qstr = $_SERVER["QUERY_STRING"];
-  list($radd, $inv, $amt) = explode('*', $qstr);
+  list($radd, $inv, $amt, $lcurr) = explode('*', $qstr);
 } else {
   $radd = $inv = $amt = '';
+  $lcurr = "USD";
 }
 ?>
 
@@ -61,14 +62,34 @@ if (isset($_SERVER["QUERY_STRING"])) {
 
 <form method="post">
 <br>
+<font color=white face="arial" size="4">Local Currency<br>
+<select name="s1"><option value="EPIC">EPIC</option>
+<option value="USD">USD</option><option value="AUD">AUD</option><option value="BRL">BRL</option>
+<option value="CAD">CAD</option><option value="CHF">CHF</option><option value="CLP">CLP</option>
+<option value="CNY">CNY</option><option value="CZK">CZK</option><option value="DKK">DKK</option>
+<option value="EUR">EUR</option><option value="GBP">GBP</option><option value="HKD">HKD</option>
+<option value="HUF">HUF</option><option value="IRD">IRD</option><option value="ILS">ILS</option>
+<option value="INR">INR</option><option value="JPY">JPY</option><option value="KRW">KRW</option>
+<option value="MXN">MXN</option><option value="MYR">MYR</option><option value="NOK">NOK</option>
+<option value="NZD">NZD</option><option value="PHP">PHP</option><option value="PKR">PKR</option>
+<option value="PLN">PLN</option><option value="RUB">RUB</option><option value="SEK">SEK</option>
+<option value="SGD">SGD</option><option value="THB">THB</option><option value="TRY">TRY</option>
+<option value="TWD">TWD</option><option value="ZAR">ZAR</option><option value="VND">VND</option>
+<option value="MAD">MAD</option><option value="IRR">IRR</option><option value="ARS">ARS</option>
+<option value="RON">RON</option><option value="UAH">UAH</option><option value="NGN">NGN</option>
+<option value="AED">AED</option><option value="COP">COP</option><option value="EGP">EGP</option>
+<option value="SAR">SAR</option><option value="BDT">BDT</option><option value="GHS">GHS</option>
+<option value="BGN">BGN</option><option value="VES">VES</option>
+<option selected="selected"><?php echo $lcurr; ?></option>
+</select><br><br>
 <font color=white face="arial" size="4">Wallet Receive Address<br>
 <textarea name="t1" cols="30" rows="3" required="true" spellcheck="false" maxlength="80">
 <?php echo $radd;?></textarea>
 <br><font size="2">80 char max</font><br><br>
-<font color=white face="arial" size="4">Invoice or Memo<br>
-<textarea name="t2" cols="20" rows="1" required="true" spellcheck="false" maxlength="20">
+<font color=white face="arial" size="4">Point of Sale ID<br>
+<textarea name="t2" cols="40" rows="1" required="true" spellcheck="false" maxlength="20">
 <?php echo $inv;?></textarea>
-<br><font size="2">20 char max</font><br><br>
+<br><font size="2">40 char max</font><br><br>
 <font color=white face="arial" size="4">Amount<br>
 <!-- <textarea name="t3" cols="15" rows="1" required="true" spellcheck="false" maxlength="13"> -->
 <input
@@ -105,8 +126,14 @@ session_start();
 
 if(array_key_exists('gen',$_POST)){
 
-  $a = $_POST['t1'] . "*" . $_POST['t2'] . "*" . $_POST['t3']; 
-  // echo $a;
+  $eprice = "";
+
+  if($_POST['s1'] != "EPIC"){  
+     getprice();
+     $a = $_POST['t1'] . "*" . $_POST['t2'] . "*" . $eprice;
+  } else {
+     $a = $_POST['t1'] . "*" . $_POST['t2'] . "*" . $_POST['t3'];
+  }
 
   // (B) CREATE QR CODE
   $qr = QrCode::create($a)
@@ -124,15 +151,63 @@ if(array_key_exists('gen',$_POST)){
   ->setResizeToWidth(30);
 
   // (B5) ATTACH LABEL
-  // $label = Label::create($a)
-  // ->setTextColor(new Color(0, 0, 0));
+  if($_POST['s1'] != "EPIC"){  
+     $label = Label::create($_POST['t3']." ".$_POST['s1']." to Epic: ".$eprice)
+     ->setTextColor(new Color(0, 0, 0));
+  } else {
+     $label = Label::create("Epic to Send: ".$_POST['t3'])
+     ->setTextColor(new Color(0, 0, 0));
+  }
+  //$label = Label::create($eprice)
+  
 
   // (C) OUTPUT QR CODE
   $writer = new PngWriter();
-  // $result = $writer->write($qr, $logo, $label);
-  $result = $writer->write($qr, $logo);
+  $result = $writer->write($qr, $logo, $label);
+  // $result = $writer->write($qr, $logo);
   //header("Content-Type: " . $result->getMimeType());
   //echo $result->getString();
   echo "<img src='{$result->getDataUri()}'>";
 }
+
+function getprice() {
+global $eprice;
+
+$url = 'https://pro-api.coinmarketcap.com/v2/tools/price-conversion';
+
+$parameters = [
+  'id' => '5435',
+  'amount' => $_POST['t3'],
+  'convert' => $_POST['s1']
+];
+
+$headers = [
+  'Accepts: application/json',
+  'X-CMC_PRO_API_KEY: b85a6b8d-ed4f-4642-8f03-071b36ca5a6a'
+];
+$qs = http_build_query($parameters); // query string encode the parameters
+$request = "{$url}?{$qs}"; // create the request URL
+
+
+$curl = curl_init(); // Get cURL resource
+// Set cURL options
+curl_setopt_array($curl, array(
+  CURLOPT_URL => $request,            // set the request URL
+  CURLOPT_HTTPHEADER => $headers,     // set the headers 
+  CURLOPT_RETURNTRANSFER => 1         // ask for raw response instead of bool
+));
+
+$response = curl_exec($curl); // Send the request, save the response
+// print_r(json_decode($response)); // print json decoded response
+curl_close($curl); // Close request
+
+$part1 = strchr($response,"price");
+$part2 = substr($part1,7);
+$endpos = strpos($part2,"last");
+$eprice = substr($part2,0,$endpos-2);
+}
 ?>
+
+
+
+
