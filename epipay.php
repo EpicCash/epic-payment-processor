@@ -130,9 +130,9 @@ if(array_key_exists('gen',$_POST)){
 
   if($_POST['s1'] != "EPIC"){  
      getprice();
-     $a = $_POST['t1'] . "*" . $_POST['t2'] . "*" . $eprice;
+     $a = $_POST['t1'] . "*ID: " . $_POST['t2'] . " " . $_POST['s1'] .": " . $_POST['t3'] . "*" . $eprice;
   } else {
-     $a = $_POST['t1'] . "*" . $_POST['t2'] . "*" . $_POST['t3'];
+     $a = $_POST['t1'] . "*ID: " . $_POST['t2'] . " " . $_POST['s1'] .": " . $_POST['t3'] . "*" . $_POST['t3'];
   }
 
   // (B) CREATE QR CODE
