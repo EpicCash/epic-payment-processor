@@ -36,7 +36,6 @@ https://epipay.epic.tech?receive_address***local_currency for persistent address
 Notes:
 * The amount field should bring up the Numeric Keypad on mobiles. Default local currency is USD.
 * Select EPIC to skip conversion of local currency to Epic.
-* The QRcode second output field now contains:
 * The QRcode second output field now contains ID plus currency and currency amount.
 
 Example Output:
