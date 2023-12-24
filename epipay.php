@@ -97,25 +97,24 @@ if (isset($_SERVER["QUERY_STRING"])) {
 <?php echo $inv;?></textarea>
 <br><font size="2">40 char max</font><br><br>
 <font color=white face="arial" size="4">Amount<br>
-<!-- <textarea name="t3" cols="15" rows="1" required="true" spellcheck="false" maxlength="13"> -->
+
 <input
   name="t3"
   required="true"
   inputmode="decimal"
   type="decimal"
-  style="font-size:18px; color:blue; background-color:lightgray;"
+  style="font-face="arial"; font-size:18px; color:blue; background-color:lightgray;"
   maxlength="15"
   size="13"
   value=<?php echo $amt;?>
 >
-<!-- <?php echo $amt;?></textarea> -->
+
 <br><font size="2">15 digit w/dec max</font><br><br>
 
 <button class="button" name="gen"><font face="arial" size="4" color="green">Generate</font>
 </button>
 <br><br>
 </form>
-
 
 <?php
 
@@ -138,7 +137,7 @@ if(array_key_exists('gen',$_POST)){
   if (str_contains($memo, '*')) {
      $memo = str_replace('*', '', $memo);
   }
-  
+
   if($_POST['s1'] != "EPIC"){  
      getprice();
      $a = $_POST['t1'] . "*ID: " . $memo . " " . $_POST['s1'] .": " . $_POST['t3'] . "*" . $eprice;
@@ -178,49 +177,45 @@ if(array_key_exists('gen',$_POST)){
   //echo $result->getString();
   $msg = $label->getText();
   echo "<img src='{$result->getDataUri()}'>";
-  echo "<script type='text/javascript'>alert('$msg');</script>";
+// END QRCODE GENERATION
+
+  echo "<script type='text/javascript'>alert('".$msg."');</script>";
 }
 
 function getprice() {
-global $eprice;
+  global $eprice;
 
-$url = 'https://pro-api.coinmarketcap.com/v2/tools/price-conversion';
+  $url = 'https://pro-api.coinmarketcap.com/v2/tools/price-conversion';
 
-//$parameters = [
-//  'id' => '5435',
-//  'amount' => $_POST['t3'],
-//  'convert' => $_POST['s1']
-//];
+  $parameters = [
+    'symbol' => $_POST['s1'],
+    'amount' => $_POST['t3'],
+    'convert' => 'EPIC'
+  ];
 
-$parameters = [
-  'symbol' => $_POST['s1'],
-  'amount' => $_POST['t3'],
-  'convert' => 'EPIC'
-];
-
-$headers = [
+  $headers = [
   'Accepts: application/json',
   'X-CMC_PRO_API_KEY: b85a6b8d-ed4f-4642-8f03-071b36ca5a6a'
-];
-$qs = http_build_query($parameters); // query string encode the parameters
-$request = "{$url}?{$qs}"; // create the request URL
+  ];
+  $qs = http_build_query($parameters); // query string encode the parameters
+  $request = "{$url}?{$qs}"; // create the request URL
 
-$curl = curl_init(); // Get cURL resource
-// Set cURL options
-curl_setopt_array($curl, array(
+  $curl = curl_init(); // Get cURL resource
+  // Set cURL options
+  curl_setopt_array($curl, array(
   CURLOPT_URL => $request,            // set the request URL
   CURLOPT_HTTPHEADER => $headers,     // set the headers 
   CURLOPT_RETURNTRANSFER => 1         // ask for raw response instead of bool
-));
+  ));
 
-$response = curl_exec($curl); // Send the request, save the response
-// print_r(json_decode($response)); // print json decoded response
-curl_close($curl); // Close request
+  $response = curl_exec($curl); // Send the request, save the response
+  // print_r(json_decode($response)); // print json decoded response
+  curl_close($curl); // Close request
 
-$part1 = strchr($response,"price");
-$part2 = substr($part1,7);
-$endpos = strpos($part2,"last");
-$eprice = substr($part2,0,$endpos-2);
+  $part1 = strchr($response,"price");
+  $part2 = substr($part1,7);
+  $endpos = strpos($part2,"last");
+  $eprice = substr($part2,0,$endpos-2);
 }
 ?>
 </body>
