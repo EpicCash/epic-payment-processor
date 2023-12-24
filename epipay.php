@@ -2,9 +2,9 @@
 <!---<html xmlns="http://www.w3.org/1999/xhtml">--->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="description" content="Epicenter QRcode Generator">
+<meta name="description" content="EpiPay QRcode Generator">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
-<title>Epicenter QRcode Generator</title>
+<title>EpiPay QRcode Generator</title>
 </head>
 
 <style>
@@ -48,6 +48,10 @@ textarea
 if (isset($_SERVER["QUERY_STRING"])) {
   $qstr = $_SERVER["QUERY_STRING"];
   list($radd, $inv, $amt, $lcurr) = explode('*', $qstr);
+  if(empty($_SERVER["QUERY_STRING"])){
+    $radd = $inv = $amt = '';
+    $lcurr = "USD";
+  }
 } else {
   $radd = $inv = $amt = '';
   $lcurr = "USD";
@@ -63,7 +67,9 @@ if (isset($_SERVER["QUERY_STRING"])) {
 <form method="post">
 <br>
 <font color=white face="arial" size="4">Local Currency<br>
-<select name="s1"><option value="EPIC">EPIC</option>
+<select name="s1">
+<option selected="selected"><?php echo $lcurr; ?></option>
+<option value="EPIC">EPIC</option>
 <option value="USD">USD</option><option value="AUD">AUD</option><option value="BRL">BRL</option>
 <option value="CAD">CAD</option><option value="CHF">CHF</option><option value="CLP">CLP</option>
 <option value="CNY">CNY</option><option value="CZK">CZK</option><option value="DKK">DKK</option>
@@ -80,7 +86,7 @@ if (isset($_SERVER["QUERY_STRING"])) {
 <option value="AED">AED</option><option value="COP">COP</option><option value="EGP">EGP</option>
 <option value="SAR">SAR</option><option value="BDT">BDT</option><option value="GHS">GHS</option>
 <option value="BGN">BGN</option><option value="VES">VES</option>
-<option selected="selected"><?php echo $lcurr; ?></option>
+
 </select><br><br>
 <font color=white face="arial" size="4">Wallet Receive Address<br>
 <textarea name="t1" cols="30" rows="3" required="true" spellcheck="false" maxlength="80">
@@ -94,6 +100,7 @@ if (isset($_SERVER["QUERY_STRING"])) {
 <!-- <textarea name="t3" cols="15" rows="1" required="true" spellcheck="false" maxlength="13"> -->
 <input
   name="t3"
+  required="true"
   inputmode="decimal"
   type="decimal"
   style="font-size:18px; color:blue; background-color:lightgray;"
@@ -103,12 +110,12 @@ if (isset($_SERVER["QUERY_STRING"])) {
 >
 <!-- <?php echo $amt;?></textarea> -->
 <br><font size="2">15 digit w/dec max</font><br><br>
+
 <button class="button" name="gen"><font face="arial" size="4" color="green">Generate</font>
 </button>
+<br><br>
 </form>
-<br><br><br>
-</body>
-</html>
+
 
 <?php
 
@@ -121,8 +128,6 @@ use Endroid\QrCode\Color\Color;
 use Endroid\QrCode\Logo\Logo;
 use Endroid\QrCode\Label\Label;
 session_start();
-
-// echo "Address: " . $radd . " Inv/Memo: " . $inv ." Amt: " . $amt;
 
 if(array_key_exists('gen',$_POST)){
 
@@ -140,7 +145,7 @@ if(array_key_exists('gen',$_POST)){
   // (B1) CORRECTION LEVEL
   ->setErrorCorrectionLevel(new ErrorCorrectionLevelHigh())
   // (B2) SIZE & MARGIN
-  ->setSize(160)
+  ->setSize(200) //160
   ->setMargin(2)
   // (B3) COLORS
   ->setForegroundColor(new Color(0, 0, 0))
@@ -158,16 +163,16 @@ if(array_key_exists('gen',$_POST)){
      $label = Label::create("Epic to Send: ".$_POST['t3'])
      ->setTextColor(new Color(0, 0, 0));
   }
-  //$label = Label::create($eprice)
-  
-
+    
   // (C) OUTPUT QR CODE
   $writer = new PngWriter();
   $result = $writer->write($qr, $logo, $label);
   // $result = $writer->write($qr, $logo);
   //header("Content-Type: " . $result->getMimeType());
   //echo $result->getString();
+  $msg = $label->getText();
   echo "<img src='{$result->getDataUri()}'>";
+  echo "<script type='text/javascript'>alert('$msg');</script>";
 }
 
 function getprice() {
@@ -175,10 +180,16 @@ global $eprice;
 
 $url = 'https://pro-api.coinmarketcap.com/v2/tools/price-conversion';
 
+//$parameters = [
+//  'id' => '5435',
+//  'amount' => $_POST['t3'],
+//  'convert' => $_POST['s1']
+//];
+
 $parameters = [
-  'id' => '5435',
+  'symbol' => $_POST['s1'],
   'amount' => $_POST['t3'],
-  'convert' => $_POST['s1']
+  'convert' => 'EPIC'
 ];
 
 $headers = [
@@ -187,7 +198,6 @@ $headers = [
 ];
 $qs = http_build_query($parameters); // query string encode the parameters
 $request = "{$url}?{$qs}"; // create the request URL
-
 
 $curl = curl_init(); // Get cURL resource
 // Set cURL options
@@ -207,6 +217,10 @@ $endpos = strpos($part2,"last");
 $eprice = substr($part2,0,$endpos-2);
 }
 ?>
+</body>
+
+
+
 
 
 
