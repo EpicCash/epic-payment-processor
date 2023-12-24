@@ -25,13 +25,22 @@ For Epic Pay, the following steps are required to process a payment:
 
 You use a browser to access the epipay QRcode generator. It is configured to accept the following URL formats:
 
-https://epipay.epic.tech - allows manual entry of receive address, invoice/memo, and amount. These values will reset after you generate the QRcode.
+https://epipay.epic.tech - allows manual entry of receive address, invoice/memo,  amount, and local currency. These values will reset after you generate the QRcode.  Currency defaults to USD.
 
-https://epipay.epic.tech?receive_address - use this form of URL with a query string and it will make your receive address persistent between code generations. This is good for merchants to have running on a spare phone or tablet at checkout so all they have to do between transactions is update the invoice and amount without re-entering the receive address.
+https://epipay.epic.tech?receive_address - use this form of URL with a query string and it will make your receive address persistent between code generations. This is good for merchants to have running on a spare phone or tablet at checkout so all they have to do between transactions is update the invoice and amount without re-entering the receive address. Currency defaults to USD.
 
-https://epipay.epic.tech?receive_address*inv/memo*amount - this will populate all data fields from the URL delimited with '*' and all will be persistent. To reset, just use https://epipay.epic.tech.
+https://epipay.epic.tech?receive_address*inv/memo*amount*local_currency - this will populate all data fields from the URL delimited with '*' and all will be persistent. To reset, just use https://epipay.epic.tech.
 
-Note: The amount field should bring up the Numeric Keypad on mobiles.
+https://epipay.epic.tech?receive_address***local_currency for persistent address and currency or ?***local_currency for just that.
+
+Notes:
+* The amount field should bring up the Numeric Keypad on mobiles. Default local currency is USD.
+* Select EPIC to skip conversion of local currency to Epic.
+* The QRcode second output field now contains:
+* The QRcode second output field now contains ID plus currency and currency amount.
+
+Example Output:
+esYMG6XY8YBn5jmFGW6JeN8xyyat2MWUK6r4sGmrgiAJ7voL2itW@epicbox.epic.tech * ID: 54611 USD: 1.25 * 2.9573078339744865.
 
 ## Using GUI for Payment Processing via Merchant Payment Request
 
