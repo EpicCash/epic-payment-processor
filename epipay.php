@@ -195,7 +195,7 @@ function getprice() {
 
   $headers = [
   'Accepts: application/json',
-  'X-CMC_PRO_API_KEY: b85a6b8d-ed4f-4642-8f03-071b36ca5a6a'
+  'X-CMC_PRO_API_KEY: b85a6b8d-ed4f-4642-8f03-071b36ca5a6a' //get your own API key from CMC
   ];
   $qs = http_build_query($parameters); // query string encode the parameters
   $request = "{$url}?{$qs}"; // create the request URL
