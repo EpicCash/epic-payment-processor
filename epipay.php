@@ -132,12 +132,18 @@ session_start();
 if(array_key_exists('gen',$_POST)){
 
   $eprice = "";
+  $memo = $_POST['t2'];
 
+  // Remove any * from ID Field
+  if (str_contains($memo, '*')) {
+     $memo = str_replace('*', '', $memo);
+  }
+  
   if($_POST['s1'] != "EPIC"){  
      getprice();
-     $a = $_POST['t1'] . "*ID: " . $_POST['t2'] . " " . $_POST['s1'] .": " . $_POST['t3'] . "*" . $eprice;
+     $a = $_POST['t1'] . "*ID: " . $memo . " " . $_POST['s1'] .": " . $_POST['t3'] . "*" . $eprice;
   } else {
-     $a = $_POST['t1'] . "*ID: " . $_POST['t2'] . " " . $_POST['s1'] .": " . $_POST['t3'] . "*" . $_POST['t3'];
+     $a = $_POST['t1'] . "*ID: " . $memo . " " . $_POST['s1'] .": " . $_POST['t3'] . "*" . $_POST['t3'];
   }
 
   // (B) CREATE QR CODE
