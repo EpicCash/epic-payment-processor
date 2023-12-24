@@ -103,7 +103,7 @@ if (isset($_SERVER["QUERY_STRING"])) {
   required="true"
   inputmode="decimal"
   type="decimal"
-  style="font-face="arial"; font-size:18px; color:blue; background-color:lightgray;"
+  style="font-family: 'Helvetica', Arial, Lucida Grande, sans-serif; font-size: 18px; color: green; background-color: lightgray;"
   maxlength="15"
   size="13"
   value=<?php echo $amt;?>
