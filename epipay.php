@@ -105,7 +105,7 @@ if (isset($_SERVER["QUERY_STRING"])) {
   type="decimal"
   style="font-family: 'Helvetica', Arial, Lucida Grande, sans-serif; font-size: 18px; color: green; background-color: lightgray;"
   maxlength="15"
-  size="13"
+  size="15"
   value=<?php echo $amt;?>
 >
 
