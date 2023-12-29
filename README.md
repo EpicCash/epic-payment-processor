@@ -7,7 +7,7 @@ Settling the Invoice is the job of a separate Payment Processing System. This co
 
 Payment Processing is separate from Point of Sale, but they can have hooks into each other (POS sends PPS the invoice and amt, PPS sends POS confirmation of payment to settle Invoice). The Epic PPS allows the merchant to manually generate the parts required for Epic wallet to settle the transaction with Epic and would also require a manual query of the wallet to verify the amount was received and then mark the Invoice in the POS as 'settled/paid'.
 
-The required parts (Epic address, Invoice # or Transaction Description, Amount) can be generated from a merchant's POS system with minor coding and present the info as a QRcode for the Epic Pay Wallet to scan and process (like https://epipay.epic.tech but fully automated). More POS code would be needed to query the Epic wallet to confirm the transaction amount was received in order to settle the Invoice and mark as paid.
+The required parts (Epic Receive Address, Invoice # or Transaction ID plus Local Currency Code:Currency Amount, Calculated Epic Amount) can be generated from a merchant's POS system with minor coding and present the info as a QRcode for the Epic Pay Wallet to scan and process (like https://epipay.epic.tech but fully automated). More POS code would be needed to query the Epic wallet to confirm the transaction amount was received in order to settle the Invoice and mark as paid.
 
 
 ## Epic Pay Mobile Wallet 'Pay' Button
@@ -16,7 +16,7 @@ For Epic Pay, the following steps are required to process a payment:
 
 * Scan QRcode (from Merchant 'Terminal' - tablet or PC in person) or online checkout.
 * Parse string into 3 data elements by delimeter (*) : Epic Receive address * Invoice Number or Transaction Description * Amount
-* Calculate fiat currency value of amount and append to Invoice for On-Chain Memo
+* Second QRcode element contains Invoice/ID, Currency Code:Currency Amount for On-Chain Memo
 * Jump to Send page
 * Autofill the Send Address, On-Chain Memo, Amount
 * User verifies info on Send page then taps Send to make Payment
@@ -39,7 +39,7 @@ Notes:
 * The QRcode second output field now contains ID plus currency and currency amount.
 
 Example Output:
-esYMG6XY8YBn5jmFGW6JeN8xyyat2MWUK6r4sGmrgiAJ7voL2itW@epicbox.epic.tech * ID: 54611 USD: 1.25 * 2.9573078339744865.
+esYMG6XY8YBn5jmFGW6JeN8xyyat2MWUK6r4sGmrgiAJ7voL2itW@epicbox.epic.tech*ID: 54611 USD: 6.55*2.9573078339744865
 
 ## Using GUI for Payment Processing via Merchant Payment Request
 
