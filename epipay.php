@@ -212,12 +212,11 @@ function getprice() {
   // print_r(json_decode($response)); // print json decoded response
   curl_close($curl); // Close request
 
-  $part1 = strchr($response,"price");
-  $part2 = substr($part1,7);
-//  $endpos = strpos($part2,"last");
-//  $eprice = substr($part2,0,$endpos-2);
-  $decpos = strpos($part2,".");
-  $eprice = strval(round(floatval(substr($part2,0,$decpos+9)),4)); // change 4 to 8 for full precision
+  $ppart = substr(strchr($response,"price"),7);
+//  $endpos = strpos($ppart,"last");
+//  $eprice = substr($ppart,0,$endpos-2);
+  $decpos = strpos($ppart,".");
+  $eprice = strval(round(floatval(substr($ppart,0,$decpos+9)),4)); // change 4 to 8 for full precision
 }
 ?>
 </body>
