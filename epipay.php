@@ -162,7 +162,7 @@ if(array_key_exists('gen',$_POST)){
 
   // (B5) ATTACH LABEL
   if($_POST['s1'] != "EPIC"){  
-     $label = Label::create($_POST['t3']." ".$_POST['s1']." to Epic: ".$eprice)
+     $label = Label::create($_POST['t3']." ".$_POST['s1']." => ".$eprice." Epic")
      ->setTextColor(new Color(0, 0, 0));
   } else {
      $label = Label::create("Epic to Send: ".$_POST['t3'])
@@ -214,8 +214,10 @@ function getprice() {
 
   $part1 = strchr($response,"price");
   $part2 = substr($part1,7);
-  $endpos = strpos($part2,"last");
-  $eprice = substr($part2,0,$endpos-2);
+//  $endpos = strpos($part2,"last");
+//  $eprice = substr($part2,0,$endpos-2);
+  $decpos = strpos($part2,".");
+  $eprice = strval(round(floatval(substr($part2,0,$decpos+9)),4)); // change 4 to 8 for full precision
 }
 ?>
 </body>
