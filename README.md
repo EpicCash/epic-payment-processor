@@ -3,7 +3,7 @@
 
 A typical Point of Sale System is an inventory control program with the ability to generate a sales invoice, customized for each merchant's specific situation. It does not function as a Payment Processor to 'settle' or pay the generated Invoice.
 
-Settling the Invoice is the job of a separate Payment Processing System. This could be as simple as a cash drawer attached to a computer or an integrated cash register that settles the transaction with cash. For 99% of most transactions, they are settled using a bank's Merchant Terminal to process a CC and settle the invoice with Credit.
+Settling the Invoice is the job of a separate Payment Processing System. This could be as simple as a cash drawer attached to a computer or an integrated cash register that settles the transaction with cash. For 95% of most transactions, they are settled using a bank's Merchant Terminal to process a CC, DC, or GC and settle the invoice with plastic.
 
 Payment Processing is separate from Point of Sale, but they can have hooks into each other (POS sends PPS the invoice and amt, PPS sends POS confirmation of payment to settle Invoice). The Epic PPS allows the merchant to manually generate the parts required for Epic wallet to settle the transaction with Epic and would also require a manual query of the wallet to verify the amount was received and then mark the Invoice in the POS as 'settled/paid'.
 
@@ -14,9 +14,9 @@ The required parts (Epic Receive Address, Invoice # or Transaction ID plus Local
 
 For Epic Pay, the following steps are required to process a payment:
 
-* Scan QRcode (from Merchant 'Terminal' - tablet or PC in person) or online checkout.
-* Parse string into 3 data elements by delimeter (*) : Epic Receive address * Invoice Number or Transaction Description * Amount
-* Second QRcode element contains Invoice/ID, Currency Code:Currency Amount for On-Chain Memo
+* Scan QRcode from Merchant 'Terminal' - (tablet or PC second mini monitor) in person or online checkout.
+* Parse string into 3 data elements by delimeter (*) : Epic Receive address * Transaction Data * Amount
+* Second QRcode element (Transaction Data) contains Invoice/ID and Currency Code:Currency Amount for On-Chain Memo
 * Jump to Send page
 * Autofill the Send Address, On-Chain Memo, Amount
 * User verifies info on Send page then taps Send to make Payment
