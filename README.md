@@ -44,3 +44,5 @@ Example Output (rounded to 4 dec places from 8):
 ## Using GUI for Payment Processing via Merchant Payment Request
 
 Merchant would provide not only a QRcode for EP but also the same data string as a 'Payment Request' on their Checkout screen that can be copied from the website and pasted into a Pay screen on GUI that follows the same processing steps as EP with an additional first step to paste the Payment Request string into an input field with a 'Process' button next to it. GUI could then stay on Pay screen to review processed data and verify amount then Send via a Pay Button or could jump to the standard Send screen with data autofilled (to be determined).
+
+php modules required: mb-string gd curl
