@@ -45,4 +45,18 @@ Example Output (rounded to 4 dec places from 8):
 
 Merchant would provide not only a QRcode for EP but also the same data string as a 'Payment Request' on their Checkout screen that can be copied from the website and pasted into a Pay screen on GUI that follows the same processing steps as EP with an additional first step to paste the Payment Request string into an input field with a 'Process' button next to it. GUI could then stay on Pay screen to review processed data and verify amount then Send via a Pay Button or could jump to the standard Send screen with data autofilled (to be determined).
 
+## Developer Notes
+
 php modules required: mb-string gd curl
+
+Retrieve Transactions:
+
+./epic-wallet -t ~/.epic/main -p <pwd> txs
+
+Result contains slateID, Confirmed? true, and amount to match with Invoice Amount Due (mismatch is partial payment and merchant contacts customer for balance)
+
+Use slateID to make API call:
+
+curl -vvv  -X POST -H 'Content-Type: application/json' -d  '{"id":1,"jsonrpc":"2.0","method":"retrieve_txs","params":{"tx_slate_id":"<slate_id>", "refresh_from_node": true, "tx_id": null}}' http://epic:<owner_api_secret>@127.0.0.1:3420/v2/owner;
+
+This will obviously require a running wallet to check wallet txs and keep track of last tx ID as 'last processed' and only process newer then set 'last processed' again. Then run API to pull POS ID info from 'Message 0' to match and settle pending Invoice for each new transaction by looking up slateID.
