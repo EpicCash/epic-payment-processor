@@ -29,7 +29,7 @@ https://epipay.epiccash.com - allows manual entry of receive address, invoice/me
 
 https://epipay.epiccash.com?receive_address - use this form of URL with a query string and it will make your receive address persistent between code generations. This is good for merchants to have running on a spare phone or tablet at checkout so all they have to do between transactions is update the invoice and amount without re-entering the receive address. Currency defaults to USD.
 
-https://epipay.epiccash.com?receive_address\*inv/memo\*amount\*local_currency - this will populate all data fields from the URL delimited with '*' and all will be persistent. To reset, just use https://epipay.epiccash.com.
+https://epipay.epiccash.com?receive_address*inv/memo*amount*local_currency - this will populate all data fields from the URL delimited with '*' and all will be persistent. To reset, just use https://epipay.epiccash.com.
 
 https://epipay.epiccash.com?receive_address***local_currency for persistent address and currency or ?***local_currency for just that.
 
