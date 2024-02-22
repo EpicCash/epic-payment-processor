@@ -39,7 +39,7 @@ Notes:
 * The QRcode second output field now contains ID plus currency and currency amount.
 
 Example Output (rounded to 4 dec places from 8):
-`esYMG6XY8YBn5jmFGW6JeN8xyyat2MWUK6r4sGmrgiAJ7voL2itW@epicbox.epic.tech*ID: 54611 USD: 6.55*2.9573`
+`esYMG6XY8YBn5jmFGW6JeN8xyyat2MWUK6r4sGmrgiAJ7voL2itW@epicbox.epicnet.us*ID: 54611 USD: 6.55*2.9573`
 
 ## Using GUI for Payment Processing via Merchant Payment Request
 
