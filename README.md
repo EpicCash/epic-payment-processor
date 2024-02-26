@@ -51,7 +51,7 @@ php modules required: mb-string gd curl
 
 Retrieve Transactions:
 
-./epic-wallet -t ~/.epic/main -p <pwd> txs
+./epic-wallet -t ~/.epic/main -p {pwd} txs
 
 Result contains slateID, Type=Received, Confirmed=True, and amount to match with Invoice Amount Due (mismatch is partial payment and merchant contacts customer for balance)
 
