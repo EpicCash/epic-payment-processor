@@ -60,3 +60,7 @@ Use slateID to make API call:
 curl -vvv  -X POST -H 'Content-Type: application/json' -d  '{"id":1,"jsonrpc":"2.0","method":"retrieve_txs","params":{"tx_slate_id":"<slate_id>", "refresh_from_node": true, "tx_id": null}}' http://epic:<owner_api_secret>@127.0.0.1:3420/v2/owner;
 
 This will obviously require a running wallet to check wallet txs and keep track of last tx ID as 'last processed' and only process newer then set 'last processed' again. Then run API to pull POS ID info from 'Message 0' to match and settle pending Invoice for each new transaction by looking up slateID.
+
+## Merchant Invoicing
+
+As an alternative, we are working on using the Epic Wallet Invoice method where the Merchant scans the Customer's Receive Address at checkout and generates an Invoice transaction that the Customer wallet receives and Accepts then sends a confirmation back to the Merchant's Wallet to finalize. Like a reverse File Transaction method between wallets or a reverse Payment (as explained above) where the Customer scans the Merchant Address and Info and finalizes. Allows the Merchanat wallet to initiate the transaction flow and finalize rather than the Customer's wallet.
