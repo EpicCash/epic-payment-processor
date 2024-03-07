@@ -20,6 +20,7 @@ For Epic Pay, the following steps are required to process a payment:
 * Jump to Send page
 * Autofill the Send Address, On-Chain Memo, Amount
 * User verifies info on Send page then taps Send to make Payment
+* Customer wallet will temporarily switch to Merchant's epicbox for fast pass-through transaction
 
 ## Using epipay at epiccash.com for Payment QRcodes
 
