@@ -26,7 +26,7 @@ For Epic Pay, the following steps are required to process a payment:
 
 You use a browser to access the epipay QRcode generator. It is configured to accept the following URL formats:
 
-https://epipay.epiccash.com - allows manual entry of receive address, invoice/memo,  amount, and local currency. These values will reset after you generate the QRcode.  Currency defaults to USD.
+https://epipay.epiccash.com - allows manual entry of receive address, invoice/memo,  amount, and local currency. These values will reset after you generate the QRcode.
 
 https://epipay.epiccash.com?receive_address - use this form of URL with a query string and it will make your receive address persistent between code generations. This is good for merchants to have running on a spare phone or tablet at checkout so all they have to do between transactions is update the invoice and amount without re-entering the receive address. Currency defaults to USD.
 
