@@ -46,7 +46,7 @@ The payment info string is also present in a field under the QRcode with a 'Copy
 
 ## Using GUI for Payment Processing via Merchant Payment Request
 
-Merchant would provide not only a QRcode for EP but also the same data string as a 'Payment Request' on their Checkout screen that can either be copied from the website by the customer or emailed to the customer and pasted into a Pay screen on GUI that follows the same processing steps as EP with an additional first step to paste the Payment Request string into an input field with a 'Process' button next to it. GUI could then stay on Pay screen to review processed data and verify amount then Send via a Pay Button or could jump to the standard Send screen with data autofilled (to be determined).
+Merchant would provide not only a QRcode for EP but also the same data string as a 'Payment Request' on their Checkout screen that can either be copied from the Merchant's website (custom POS with online checkout) by the customer or emailed to the customer and pasted into a Pay screen on GUI that follows the same processing steps as EP with an additional first step to paste the Payment Request string into a 'Merchant Payment Data' field with a 'Process' button next to it. GUI could then stay on Pay screen to review processed data and verify amount then Send via a Pay Button or could jump to the standard Send screen with data autofilled (to be determined).
 
 ## Developer Notes
 
