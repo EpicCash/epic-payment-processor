@@ -106,6 +106,7 @@ if (isset($_SERVER["QUERY_STRING"])) {
   style="font-family: 'Helvetica', Arial, Lucida Grande, sans-serif; font-size: 18px; color: green; background-color: lightgray;"
   maxlength="15"
   size="15"
+  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');"
   value=<?php echo $amt;?>
 >
 
@@ -114,8 +115,9 @@ if (isset($_SERVER["QUERY_STRING"])) {
 <button class="button" name="gen"><font face="arial" size="4" color="green">Generate</font>
 </button>
 <br><br>
+<a href="https://github.com/EpicCash/epic-payment-processor">User Guide</a>
 </form>
-
+<br><br>
 <?php
 
 // (A) LOAD QR CODE LIBRARY
@@ -144,6 +146,7 @@ if(array_key_exists('gen',$_POST)){
   } else {
      $a = $_POST['t1'] . "*ID: " . $memo . " " . $_POST['s1'] .": " . $_POST['t3'] . "*" . $_POST['t3'];
   }
+
 
   // (B) CREATE QR CODE
   $qr = QrCode::create($a)
@@ -177,9 +180,27 @@ if(array_key_exists('gen',$_POST)){
   //echo $result->getString();
   $msg = $label->getText();
   echo "<img src='{$result->getDataUri()}'>";
+
 // END QRCODE GENERATION
 
-  echo "<script type='text/javascript'>alert('".$msg."');</script>";
+//  echo "<script type='text/javascript'>alert('".$msg."');</script>";
+echo <<< EOF
+<br><br>
+<textarea
+id="epic"
+style="font-family: 'Helvetica', Arial, Lucida Grande, sans-serif; font-size: 18px; color: blue; background-color: lightgray;"
+cols=40
+rows=4
+maxlength=138
+>
+EOF;
+
+  echo $a . "</textarea>";
+
+  echo '<br><br><button name="clip"><font face="arial" size="4" color="green" onclick="copyclip()">Copy/Reset</button>';
+
+  echo '<br><br> Conversion provided by CoinMarketCap';
+
 }
 
 function getprice() {
@@ -214,16 +235,41 @@ function getprice() {
 
   $ppart = substr(strchr($response,"price"),7);
 //  $endpos = strpos($ppart,"last");
-//  $eprice = substr($ppart,0,$endpos-2);
-  $decpos = strpos($ppart,".");
+//  $eprice = substr($ppart,0,$endpos-2); // returns everything between 'price' and 'last' in case no decimal
+  $decpos = strpos($ppart,"."); // assumes CMC always returns a decimal in Epic value
   $eprice = strval(round(floatval(substr($ppart,0,$decpos+9)),4)); // change 4 to 8 for full precision
 }
 ?>
+<script text/javascript>
+function copyclip() {
+  // Get the text field
+  var copyText = document.getElementById("epic");
+
+  // Select the text field
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); // For mobile devices
+
+   // Copy the text inside the text field
+  navigator.clipboard.writeText(copyText.value);
+  document.execCommand("copy");
+
+  // Alert the copied text
+  //setTimeout(function(){
+  //alert("Copied to Clipboard: " + copyText.value);
+  //},1000);
+
+  //try {
+  //     var retVal = document.execCommand("copy");
+  //     //console.log('Copy to clipboard returns: ' + retVal);
+  //     alert("Copied to Clipboard: " + copyText.value); 
+  //     }
+  //     catch (err) { console.log('Error while copying to clipboard: ' + err); }    
+  //    };
+
+  window.location.href = window.location.href;
+}
+</script>
+
 </body>
-
-
-
-
-
 
 
