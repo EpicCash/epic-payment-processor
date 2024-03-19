@@ -42,6 +42,8 @@ Notes:
 Example Output (rounded to 4 dec places from 8):
 `esYMG6XY8YBn5jmFGW6JeN8xyyat2MWUK6r4sGmrgiAJ7voL2itW@epicbox.epicnet.us*ID: 54611 USD: 6.55*2.9573`
 
+The payment info string is also present in a field under the QRcode with a 'Copy/Reset' button. This allows a merchant to copy/paste into an email message to the customer so they can copy/paste into the GUI Payment Processing field (planned for future release).
+
 ## Using GUI for Payment Processing via Merchant Payment Request
 
 Merchant would provide not only a QRcode for EP but also the same data string as a 'Payment Request' on their Checkout screen that can be copied from the website and pasted into a Pay screen on GUI that follows the same processing steps as EP with an additional first step to paste the Payment Request string into an input field with a 'Process' button next to it. GUI could then stay on Pay screen to review processed data and verify amount then Send via a Pay Button or could jump to the standard Send screen with data autofilled (to be determined).
