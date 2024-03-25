@@ -53,7 +53,7 @@ Merchant would provide not only a QRcode for EP but also the same data string as
 php modules required: mb-string gd curl
 
 Modify epipay.php and use your own CMC API key:
-'X-CMC_PRO_API_KEY: {enter your CMC API key here without brackets}' //get your own API key from CMC
+```'X-CMC_PRO_API_KEY: {enter your CMC API key here without brackets}' //get your own API key from CMC```
 
 Retrieve Transactions:
 
