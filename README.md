@@ -40,6 +40,7 @@ Notes:
 * The QRcode second output field now contains ID plus currency and currency amount.
 
 Example Output (rounded to 4 dec places from 8):
+
 `esYMG6XY8YBn5jmFGW6JeN8xyyat2MWUK6r4sGmrgiAJ7voL2itW@epicbox.epicnet.us*ID: 54611 USD: 6.55*2.9573`
 
 The payment info string is also present in a field under the QRcode with a 'Copy/Reset' button. This allows a merchant to copy/paste into an email message to the customer so they can copy/paste into the GUI Payment Processing field (planned for future release).
@@ -53,6 +54,7 @@ Merchant would provide not only a QRcode for EP but also the same data string as
 php modules required: mb-string gd curl
 
 Modify epipay.php and use your own CMC API key:
+
 ```'X-CMC_PRO_API_KEY: {enter your CMC API key here without brackets}' //get your own API key from CMC```
 
 Retrieve Transactions:
