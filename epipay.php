@@ -165,7 +165,7 @@ if(array_key_exists('gen',$_POST)){
 
   // (B5) ATTACH LABEL
   if($_POST['s1'] != "EPIC"){  
-     $label = Label::create($_POST['t3']." ".$_POST['s1']." => ".$eprice." Epic")
+     $label = Label::create($_POST['t3']." ".$_POST['s1']." = ".$eprice." Epic")
      ->setTextColor(new Color(0, 0, 0));
   } else {
      $label = Label::create("Epic to Send: ".$_POST['t3'])
@@ -184,6 +184,10 @@ if(array_key_exists('gen',$_POST)){
 // END QRCODE GENERATION
 
 //  echo "<script type='text/javascript'>alert('".$msg."');</script>";
+//echo "<font color='green'>" . $_POST['t3'] . " " . $_POST['s1'] . " = " . $eprice . " Epic " . date("Y/m/d h:i:sa") . "</font>" ;
+date_default_timezone_set("America/New_York");
+echo "<br><br><font color='green'>" . $msg . " @ " . date("Y/m/d h:i:sa") . "</font>";
+
 echo <<< EOF
 <br><br>
 <textarea
@@ -206,17 +210,19 @@ EOF;
 function getprice() {
   global $eprice;
 
-  $url = 'https://pro-api.coinmarketcap.com/v2/tools/price-conversion';
-
+  //$url = 'https://pro-api.coinmarketcap.com/v2/tools/price-conversion';
+  $url = 'https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest';
   $parameters = [
-    'symbol' => $_POST['s1'],
-    'amount' => $_POST['t3'],
-    'convert' => 'EPIC'
+    //'symbol' => $_POST['s1'],
+    //'amount' => $_POST['t3'],
+    //'convert' => 'EPIC'
+    'symbol' => 'EPIC',
+    'convert' => $_POST['s1']
   ];
 
   $headers = [
   'Accepts: application/json',
-  'X-CMC_PRO_API_KEY: b85a6b8d-ed4f-4642-8f03-071b36ca5a6a' //get your own API key from CMC
+  'X-CMC_PRO_API_KEY: {enter your CMC API key here}' //get your own API key from CMC
   ];
   $qs = http_build_query($parameters); // query string encode the parameters
   $request = "{$url}?{$qs}"; // create the request URL
@@ -237,7 +243,8 @@ function getprice() {
 //  $endpos = strpos($ppart,"last");
 //  $eprice = substr($ppart,0,$endpos-2); // returns everything between 'price' and 'last' in case no decimal
   $decpos = strpos($ppart,"."); // assumes CMC always returns a decimal in Epic value
-  $eprice = strval(round(floatval(substr($ppart,0,$decpos+9)),4)); // change 4 to 8 for full precision
+  $eprice = strval(round(floatval(substr($ppart,0,$decpos+9)),2)); // change 2 to 4,6,8 for epic 10,100,1000
+  $eprice = round($_POST['t3']/$eprice, 2);  // change 2 to 4,6,8 for epic 10,100,1000
 }
 ?>
 <script text/javascript>
